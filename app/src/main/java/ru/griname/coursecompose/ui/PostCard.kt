@@ -36,7 +36,7 @@ import ru.griname.coursecompose.domain.StatisticsItem
 import ru.griname.coursecompose.domain.StatisticsType
 
 @Composable
-fun VkPost(
+fun PostCard(
     modifier: Modifier = Modifier,
     feedPost: FeedPost,
     onViewClickListener: (StatisticsItem) -> Unit,
