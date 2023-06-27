@@ -1,41 +1,50 @@
 package ru.griname.coursecompose
 
-import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ru.griname.coursecompose.domain.FeedPost
+import ru.griname.coursecompose.domain.PostComment
 import ru.griname.coursecompose.domain.StatisticsItem
-import ru.griname.coursecompose.domain.StatisticsType
+import ru.griname.coursecompose.ui.HomeScreenState
 
 class MainViewModel : ViewModel() {
 
-    private val list = mutableListOf<FeedPost>().apply {
+    private val posts = mutableListOf<FeedPost>().apply {
         repeat(10) {
-            add(
-                FeedPost(
-                    id = it,
-                    communityName = "$it Post Name",
-                    publicationDate = "14:${it}0",
-                    avatarResId = R.drawable.post_comunity_thumbnail,
-                    contentText = LoremIpsum(it).values.first(),
-                    contentImageResId = R.drawable.post_content_image,
-                    statistics = listOf(
-                        StatisticsItem(StatisticsType.VIEW, 946),
-                        StatisticsItem(StatisticsType.SHARE, 5),
-                        StatisticsItem(StatisticsType.COMMENT, 9),
-                        StatisticsItem(StatisticsType.LIKE, 27),
-                    )
-                )
-            )
+            add(FeedPost(id = it))
         }
     }
 
-    private val _feedPosts = MutableLiveData<List<FeedPost>>(list)
-    val feedPosts: LiveData<List<FeedPost>> = _feedPosts
+    private val comments = mutableListOf<PostComment>().apply {
+        repeat(10) {
+            add(PostComment(id = it))
+        }
+    }
+
+    private val initialState = HomeScreenState.Posts(posts = posts)
+    private val _screenState = MutableLiveData<HomeScreenState>(initialState)
+    val screenState: LiveData<HomeScreenState> = _screenState
+
+    private var savedState: HomeScreenState? = initialState
+
+    fun showComments(feedPost: FeedPost) {
+        savedState = _screenState.value
+        _screenState.value = HomeScreenState.Comments(
+            feedPost = feedPost,
+            comments = comments
+        )
+    }
+
+    fun closeComments() {
+        _screenState.value = savedState
+    }
 
     fun updateCount(item: StatisticsItem, feedPost: FeedPost) {
-        val oldPosts = feedPosts.value?.toMutableList() ?: mutableListOf()
+        val currentState = _screenState.value
+        if (currentState !is HomeScreenState.Posts) return
+
+        val oldPosts = currentState.posts.toMutableList()
         val oldStatistics = feedPost.statistics
         val newStatistics = oldStatistics.toMutableList().apply {
             replaceAll { oldItem ->
@@ -47,7 +56,7 @@ class MainViewModel : ViewModel() {
             }
         }
         val newFeedPost = feedPost.copy(statistics = newStatistics)
-        _feedPosts.value = oldPosts.apply {
+        val newPosts = oldPosts.apply {
             replaceAll {
                 if (it.id == newFeedPost.id) {
                     newFeedPost
@@ -56,11 +65,15 @@ class MainViewModel : ViewModel() {
                 }
             }
         }
+        _screenState.value = HomeScreenState.Posts(posts = newPosts)
     }
 
     fun remove(feedPost: FeedPost) {
-        val oldPosts = feedPosts.value?.toMutableList() ?: mutableListOf()
+        val currentState = _screenState.value
+        if (currentState !is HomeScreenState.Posts) return
+
+        val oldPosts = currentState.posts.toMutableList()
         oldPosts.remove(feedPost)
-        _feedPosts.value = oldPosts
+        _screenState.value = HomeScreenState.Posts(posts = oldPosts)
     }
 }

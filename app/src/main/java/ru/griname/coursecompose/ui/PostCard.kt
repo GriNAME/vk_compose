@@ -41,7 +41,7 @@ fun PostCard(
     feedPost: FeedPost,
     onViewClickListener: (StatisticsItem) -> Unit,
     onShareClickListener: (StatisticsItem) -> Unit,
-    onCommentClickListener: (StatisticsItem) -> Unit,
+    onCommentClickListener: () -> Unit,
     onLikeClickListener: (StatisticsItem) -> Unit
 ) {
     Card(
@@ -128,7 +128,7 @@ private fun Statistics(
     statistics: List<StatisticsItem>,
     onViewClickListener: (StatisticsItem) -> Unit,
     onShareClickListener: (StatisticsItem) -> Unit,
-    onCommentClickListener: (StatisticsItem) -> Unit,
+    onCommentClickListener: () -> Unit,
     onLikeClickListener: (StatisticsItem) -> Unit
 ) {
     Row {
@@ -154,7 +154,7 @@ private fun Statistics(
             IconWithText(
                 commentItem.count,
                 R.drawable.ic_comment
-            ) { onCommentClickListener(commentItem) }
+            ) { onCommentClickListener() }
             val likeItem = statistics.getItemByType(StatisticsType.LIKE)
             IconWithText(
                 likeItem.count,
