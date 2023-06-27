@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import ru.griname.coursecompose.domain.FeedPost
 import ru.griname.coursecompose.domain.StatisticsItem
 import ru.griname.coursecompose.domain.StatisticsType
-import ru.griname.coursecompose.ui.NavigationItem
 
 class MainViewModel : ViewModel() {
 
@@ -34,13 +33,6 @@ class MainViewModel : ViewModel() {
 
     private val _feedPosts = MutableLiveData<List<FeedPost>>(list)
     val feedPosts: LiveData<List<FeedPost>> = _feedPosts
-
-    private val _selectedNavItem = MutableLiveData<NavigationItem>(NavigationItem.Home)
-    val selectedNavItem: LiveData<NavigationItem> = _selectedNavItem
-
-    fun selectNavItem(item: NavigationItem) {
-        _selectedNavItem.value = item
-    }
 
     fun updateCount(item: StatisticsItem, feedPost: FeedPost) {
         val oldPosts = feedPosts.value?.toMutableList() ?: mutableListOf()
