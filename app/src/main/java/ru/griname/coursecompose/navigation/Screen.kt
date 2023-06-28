@@ -1,6 +1,7 @@
 package ru.griname.coursecompose.navigation
 
 import android.net.Uri
+import com.google.gson.Gson
 import ru.griname.coursecompose.domain.FeedPost
 
 sealed class Screen(
@@ -12,7 +13,8 @@ sealed class Screen(
         private const val ROUTE_FOR_ARGS = "ROUTE_COMMENTS"
 
         fun getRouteWithArgs(feedPost: FeedPost): String{
-            return "$ROUTE_FOR_ARGS/${feedPost.id}/${feedPost.contentText.encode()}"
+            val feedPostJson = Gson().toJson(feedPost)
+            return "$ROUTE_FOR_ARGS/${feedPostJson.encode()}"
         }
     }
     object Favorite : Screen(ROUTE_FAVORITE)
@@ -20,13 +22,11 @@ sealed class Screen(
 
     companion object {
 
-        const val KEY_FEED_POST_ID = "KEY_FEED_POST_ID"
-        const val KEY_FEED_POST_TEXT = "KEY_FEED_POST_TEXT"
+        const val KEY_FEED_POST = "KEY_FEED_POST"
 
         private const val ROUTE_HOME = "ROUTE_HOME"
         private const val ROUTE_COMMENTS = "ROUTE_COMMENTS" +
-            "/{$KEY_FEED_POST_ID}" +
-            "/{$KEY_FEED_POST_TEXT}"
+            "/{$KEY_FEED_POST}"
         private const val ROUTE_NEWS_FEED = "ROUTE_NEWS_FEED"
         private const val ROUTE_FAVORITE = "ROUTE_FAVORITE"
         private const val ROUTE_PROFILE = "ROUTE_PROFILE"

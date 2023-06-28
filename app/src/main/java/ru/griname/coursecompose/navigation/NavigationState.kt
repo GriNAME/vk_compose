@@ -19,7 +19,7 @@ class NavigationState(
         }
     }
 
-    fun navigateIntoNestedGraph(
+    fun navigateInto(
         route: String
     ) {
         navHostController.navigate(route)

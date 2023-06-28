@@ -64,7 +64,7 @@ fun MainScreen() {
                 HomeScreen(
                     paddingValues = paddingValues,
                     onCommentClickListener = { feedPost ->
-                        navigationState.navigateIntoNestedGraph(
+                        navigationState.navigateInto(
                             route = Screen.Comments.getRouteWithArgs(feedPost)
                         )
                     })
