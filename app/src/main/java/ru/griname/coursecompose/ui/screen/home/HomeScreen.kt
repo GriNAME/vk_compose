@@ -1,6 +1,5 @@
-package ru.griname.coursecompose.ui
+package ru.griname.coursecompose.ui.screen.home
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -15,34 +14,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ru.griname.coursecompose.MainViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import ru.griname.coursecompose.domain.FeedPost
 
 @Composable
 fun HomeScreen(
-    viewModel: MainViewModel,
-    paddingValues: PaddingValues
+    paddingValues: PaddingValues,
+    onCommentClickListener: (FeedPost) -> Unit
 ) {
-    val screenState = viewModel.screenState.observeAsState(HomeScreenState.Initial)
+    val viewModel: NewsFeedViewModel = viewModel()
+    val screenState = viewModel.screenState.observeAsState(NewsFeedScreenState.Initial)
 
     when (val currentState = screenState.value) {
-        is HomeScreenState.Posts -> FeedPosts(
+        is NewsFeedScreenState.Posts -> FeedPosts(
             feedPosts = currentState.posts,
             viewModel = viewModel,
-            paddingValues = paddingValues
+            paddingValues = paddingValues,
+            onCommentClickListener = onCommentClickListener
         )
-        is HomeScreenState.Comments -> {
-            CommentsScreen(
-                feedPost = currentState.feedPost,
-                comments = currentState.comments
-            ) {
-                viewModel.closeComments()
-            }
-            BackHandler {
-                viewModel.closeComments()
-            }
-        }
-        is HomeScreenState.Initial -> {
+        is NewsFeedScreenState.Initial -> {
             // Nothing to do
         }
     }
@@ -51,9 +41,10 @@ fun HomeScreen(
 @OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
 @Composable
 private fun FeedPosts(
-    viewModel: MainViewModel,
+    viewModel: NewsFeedViewModel,
     feedPosts: List<FeedPost>,
-    paddingValues: PaddingValues
+    paddingValues: PaddingValues,
+    onCommentClickListener: (FeedPost) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier.padding(paddingValues),
@@ -89,7 +80,7 @@ private fun FeedPosts(
                         viewModel.updateCount(statisticsItem, feedPost)
                     },
                     onCommentClickListener = {
-                        viewModel.showComments(feedPost)
+                        onCommentClickListener(feedPost)
                     },
                     onLikeClickListener = { statisticsItem ->
                         viewModel.updateCount(statisticsItem, feedPost)

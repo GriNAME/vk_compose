@@ -1,4 +1,4 @@
-package ru.griname.coursecompose.ui
+package ru.griname.coursecompose.ui.screen.comments
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -20,44 +20,53 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import ru.griname.coursecompose.domain.CommentPost
 import ru.griname.coursecompose.domain.FeedPost
-import ru.griname.coursecompose.domain.PostComment
 
 @Composable
 fun CommentsScreen(
     feedPost: FeedPost,
-    comments: List<PostComment>,
     onBackPressed: () -> Unit
 ) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(text = "Comment for FeedPost Id: ${feedPost.id}")
-                },
-                navigationIcon = {
-                    IconButton(onClick = { onBackPressed() }) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = null
-                        )
+    val viewModel: CommentsViewModel = viewModel(
+        factory = CommentsViewModelFactory(feedPost)
+    )
+    val screenState = viewModel.screenState.observeAsState(CommentsScreenState.Initial)
+    val currentState = screenState.value
+
+    if (currentState is CommentsScreenState.Comments) {
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = {
+                        Text(text = "Comment for FeedPost Id: ${currentState.feedPost.id}")
+                    },
+                    navigationIcon = {
+                        IconButton(onClick = { onBackPressed() }) {
+                            Icon(
+                                imageVector = Icons.Filled.ArrowBack,
+                                contentDescription = null
+                            )
+                        }
                     }
+                )
+            }
+        ) { paddingValues ->
+            LazyColumn(
+                modifier = Modifier.padding(paddingValues)
+            ) {
+                items(
+                    items = currentState.comments,
+                    key = { it.id }
+                ) { commentItem ->
+                    CommentItem(commentItem)
                 }
-            )
-        }
-    ) { paddingValues ->
-        LazyColumn(
-            modifier = Modifier.padding(paddingValues)
-        ) {
-            items(
-                items = comments,
-                key = { it.id }
-            ) { commentItem ->
-                CommentItem(commentItem)
             }
         }
     }
@@ -65,7 +74,7 @@ fun CommentsScreen(
 
 @Composable
 private fun CommentItem(
-    postComment: PostComment
+    commentPost: CommentPost
 ) {
     Row(
         modifier = Modifier
@@ -77,24 +86,24 @@ private fun CommentItem(
     ) {
         Image(
             modifier = Modifier.size(24.dp),
-            painter = painterResource(id = postComment.authorAvatarId), contentDescription = null
+            painter = painterResource(id = commentPost.authorAvatarId), contentDescription = null
         )
         Spacer(modifier = Modifier.width(8.dp))
         Column {
             Text(
-                text = "${postComment.authorName} CommentId: ${postComment.id}",
+                text = "${commentPost.authorName} CommentId: ${commentPost.id}",
                 color = MaterialTheme.colors.onPrimary,
                 fontSize = 12.sp
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = postComment.commentText,
+                text = commentPost.commentText,
                 color = MaterialTheme.colors.onPrimary,
                 fontSize = 14.sp
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = postComment.publicationDate,
+                text = commentPost.publicationDate,
                 color = MaterialTheme.colors.onSecondary,
                 fontSize = 12.sp
             )

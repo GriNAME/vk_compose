@@ -1,4 +1,4 @@
-package ru.griname.coursecompose.ui
+package ru.griname.coursecompose.ui.screen
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Favorite

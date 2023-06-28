@@ -1,4 +1,4 @@
-package ru.griname.coursecompose.ui
+package ru.griname.coursecompose.ui.screen.home
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
