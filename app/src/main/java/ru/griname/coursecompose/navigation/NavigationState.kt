@@ -11,13 +11,17 @@ class NavigationState(
 ) {
     fun navigateTo(route: String) {
         navHostController.navigate(route) {
-            popUpTo(navHostController.graph.findStartDestination().id) { saveState = true }
+            popUpTo(navHostController.graph.findStartDestination().id) {
+                saveState = true
+            }
             launchSingleTop = true
             restoreState = true
         }
     }
 
-    fun navigateIntoNestedGraph(route: String) {
+    fun navigateIntoNestedGraph(
+        route: String
+    ) {
         navHostController.navigate(route)
     }
 }
