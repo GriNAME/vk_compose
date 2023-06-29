@@ -18,6 +18,11 @@ sealed class Screen(
         }
     }
     object Favorite : Screen(ROUTE_FAVORITE)
+
+    object FavoriteOne : Screen(ROUTE_FAVORITE_ONE)
+    object FavoriteTwo : Screen(ROUTE_FAVORITE_TWO)
+    object FavoriteThree : Screen(ROUTE_FAVORITE_THREE)
+    object FavoriteFour : Screen(ROUTE_FAVORITE_FOUR)
     object Profile : Screen(ROUTE_PROFILE)
 
     companion object {
@@ -28,7 +33,13 @@ sealed class Screen(
         private const val ROUTE_COMMENTS = "ROUTE_COMMENTS" +
             "/{$KEY_FEED_POST}"
         private const val ROUTE_NEWS_FEED = "ROUTE_NEWS_FEED"
+
         private const val ROUTE_FAVORITE = "ROUTE_FAVORITE"
+        private const val ROUTE_FAVORITE_ONE = "ROUTE_FAVORITE_ONE"
+        private const val ROUTE_FAVORITE_TWO = "ROUTE_FAVORITE_TWO"
+        private const val ROUTE_FAVORITE_THREE = "ROUTE_FAVORITE_THREE"
+        private const val ROUTE_FAVORITE_FOUR = "ROUTE_FAVORITE_FOUR"
+
         private const val ROUTE_PROFILE = "ROUTE_PROFILE"
     }
 }

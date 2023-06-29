@@ -1,4 +1,4 @@
-package ru.griname.coursecompose.ui.screen.comments
+package ru.griname.coursecompose.ui.screen.home.comments
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -17,7 +17,7 @@ class CommentsViewModel(
         loadComments(feedPost)
     }
 
-    fun loadComments(feedPost: FeedPost) {
+    private fun loadComments(feedPost: FeedPost) {
         val comments = mutableListOf<CommentPost>().apply {
             repeat(10) {
                 add(CommentPost(id = it))

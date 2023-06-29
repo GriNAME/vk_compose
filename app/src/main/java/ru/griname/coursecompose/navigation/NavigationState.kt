@@ -24,6 +24,18 @@ class NavigationState(
     ) {
         navHostController.navigate(route)
     }
+
+    fun navigateWithoutBackStack(
+        route: String,
+        ignoreDestination: String
+    ) {
+        navHostController.navigate(route) {
+            popUpTo(ignoreDestination) {
+                inclusive = true
+            }
+        }
+
+    }
 }
 
 @Composable

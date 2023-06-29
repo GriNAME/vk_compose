@@ -1,4 +1,4 @@
-package ru.griname.coursecompose.ui.screen.home
+package ru.griname.coursecompose.ui.screen.home.newsfeed
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

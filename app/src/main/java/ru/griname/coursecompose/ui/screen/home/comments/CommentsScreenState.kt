@@ -1,4 +1,4 @@
-package ru.griname.coursecompose.ui.screen.comments
+package ru.griname.coursecompose.ui.screen.home.comments
 
 import ru.griname.coursecompose.domain.FeedPost
 import ru.griname.coursecompose.domain.CommentPost

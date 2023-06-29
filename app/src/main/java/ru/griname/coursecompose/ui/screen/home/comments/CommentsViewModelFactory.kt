@@ -1,4 +1,4 @@
-package ru.griname.coursecompose.ui.screen.comments
+package ru.griname.coursecompose.ui.screen.home.comments
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

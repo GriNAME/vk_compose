@@ -19,8 +19,12 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import ru.griname.coursecompose.navigation.AppNavGraph
 import ru.griname.coursecompose.navigation.Screen
 import ru.griname.coursecompose.navigation.rememberNavigationState
-import ru.griname.coursecompose.ui.screen.comments.CommentsScreen
-import ru.griname.coursecompose.ui.screen.home.HomeScreen
+import ru.griname.coursecompose.ui.screen.favorite.favoritefour.FavoriteFour
+import ru.griname.coursecompose.ui.screen.favorite.favoriteone.FavoriteOne
+import ru.griname.coursecompose.ui.screen.favorite.favoritethree.FavoriteTwo
+import ru.griname.coursecompose.ui.screen.favorite.favoritetwo.FavoriteThree
+import ru.griname.coursecompose.ui.screen.home.comments.CommentsScreen
+import ru.griname.coursecompose.ui.screen.home.newsfeed.NewsFeedScreen
 
 @Composable
 fun MainScreen() {
@@ -61,7 +65,7 @@ fun MainScreen() {
         AppNavGraph(
             navHostController = navigationState.navHostController,
             newsFeedScreenContent = {
-                HomeScreen(
+                NewsFeedScreen(
                     paddingValues = paddingValues,
                     onCommentClickListener = { feedPost ->
                         navigationState.navigateInto(
@@ -77,7 +81,33 @@ fun MainScreen() {
                     }
                 )
             },
-            favoriteScreenContent = { CountText(text = "Favorite") },
+            favoriteOneScreenContent = {
+                FavoriteOne {
+                    navigationState.navigateInto(
+                        route = Screen.FavoriteTwo.route
+                    )
+                }
+            },
+            favoriteTwoScreenContent = {
+                FavoriteTwo {
+                    navigationState.navigateInto(
+                        route = Screen.FavoriteThree.route
+                    )
+                }
+            },
+            favoriteThreeScreenContent = {
+                FavoriteThree {
+                    navigationState.navigateWithoutBackStack(
+                        route = Screen.FavoriteFour.route,
+                        ignoreDestination = Screen.FavoriteThree.route
+                    )
+                }
+            },
+            favoriteFourScreenContent = {
+                FavoriteFour {
+                    navigationState.navHostController.popBackStack()
+                }
+            },
             profileScreenContent = { CountText(text = "Profile") }
         )
     }

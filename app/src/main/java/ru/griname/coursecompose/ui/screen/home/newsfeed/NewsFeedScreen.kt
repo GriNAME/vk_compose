@@ -1,4 +1,4 @@
-package ru.griname.coursecompose.ui.screen.home
+package ru.griname.coursecompose.ui.screen.home.newsfeed
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
@@ -18,7 +18,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import ru.griname.coursecompose.domain.FeedPost
 
 @Composable
-fun HomeScreen(
+fun NewsFeedScreen(
     paddingValues: PaddingValues,
     onCommentClickListener: (FeedPost) -> Unit
 ) {
@@ -26,7 +26,7 @@ fun HomeScreen(
     val screenState = viewModel.screenState.observeAsState(NewsFeedScreenState.Initial)
 
     when (val currentState = screenState.value) {
-        is NewsFeedScreenState.Posts -> FeedPosts(
+        is NewsFeedScreenState.Posts   -> FeedPosts(
             feedPosts = currentState.posts,
             viewModel = viewModel,
             paddingValues = paddingValues,

@@ -11,7 +11,10 @@ fun AppNavGraph(
     navHostController: NavHostController,
     newsFeedScreenContent: @Composable () -> Unit,
     commentsScreenContent: @Composable (FeedPost) -> Unit,
-    favoriteScreenContent: @Composable () -> Unit,
+    favoriteOneScreenContent: @Composable () -> Unit,
+    favoriteTwoScreenContent: @Composable () -> Unit,
+    favoriteThreeScreenContent: @Composable () -> Unit,
+    favoriteFourScreenContent: @Composable () -> Unit,
     profileScreenContent: @Composable () -> Unit
 ) {
     NavHost(
@@ -23,7 +26,12 @@ fun AppNavGraph(
             commentsScreenContent = commentsScreenContent
         )
 
-        composable(Screen.Favorite.route) { favoriteScreenContent() }
+        favoriteNavGraph(
+            favoriteOneScreenContent = favoriteOneScreenContent,
+            favoriteTwoScreenContent = favoriteTwoScreenContent,
+            favoriteThreeScreenContent = favoriteThreeScreenContent,
+            favoriteFourScreenContent = favoriteFourScreenContent,
+        )
 
         composable(Screen.Profile.route) { profileScreenContent() }
     }
