@@ -68,7 +68,7 @@ fun MainScreen() {
                 NewsFeedScreen(
                     paddingValues = paddingValues,
                     onCommentClickListener = { feedPost ->
-                        navigationState.navigateInto(
+                        navigationState.navigate(
                             route = Screen.Comments.getRouteWithArgs(feedPost)
                         )
                     })
@@ -76,6 +76,9 @@ fun MainScreen() {
             commentsScreenContent = { feedPost ->
                 CommentsScreen(
                     feedPost = feedPost,
+                    onCommentClickListener = {
+                        navigationState.navigate(Screen.FavoriteFour.route)
+                    },
                     onBackPressed = {
                         navigationState.navHostController.popBackStack()
                     }
@@ -83,14 +86,14 @@ fun MainScreen() {
             },
             favoriteOneScreenContent = {
                 FavoriteOne {
-                    navigationState.navigateInto(
+                    navigationState.navigate(
                         route = Screen.FavoriteTwo.route
                     )
                 }
             },
             favoriteTwoScreenContent = {
                 FavoriteTwo {
-                    navigationState.navigateInto(
+                    navigationState.navigate(
                         route = Screen.FavoriteThree.route
                     )
                 }

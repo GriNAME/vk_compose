@@ -1,6 +1,7 @@
 package ru.griname.coursecompose.ui.screen.home.comments
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -33,7 +34,8 @@ import ru.griname.coursecompose.domain.FeedPost
 @Composable
 fun CommentsScreen(
     feedPost: FeedPost,
-    onBackPressed: () -> Unit
+    onBackPressed: () -> Unit,
+    onCommentClickListener: () -> Unit
 ) {
     val viewModel: CommentsViewModel = viewModel(
         factory = CommentsViewModelFactory(feedPost)
@@ -80,7 +82,10 @@ fun CommentsScreen(
                     items = currentState.comments,
                     key = { it.id }
                 ) { commentItem ->
-                    CommentItem(commentItem)
+                    CommentItem(
+                        commentPost = commentItem,
+                        onCommentClickListener = onCommentClickListener
+                    )
                 }
             }
         }
@@ -89,7 +94,8 @@ fun CommentsScreen(
 
 @Composable
 private fun CommentItem(
-    commentPost: CommentPost
+    commentPost: CommentPost,
+    onCommentClickListener: () -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -104,7 +110,10 @@ private fun CommentItem(
             painter = painterResource(id = commentPost.authorAvatarId), contentDescription = null
         )
         Spacer(modifier = Modifier.width(8.dp))
-        Column {
+        Column(
+            modifier = Modifier.clickable {
+                onCommentClickListener()            }
+        ) {
             Text(
                 text = "${commentPost.authorName} CommentId: ${commentPost.id}",
                 color = MaterialTheme.colors.onPrimary,

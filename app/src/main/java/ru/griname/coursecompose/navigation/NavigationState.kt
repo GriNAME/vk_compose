@@ -19,7 +19,7 @@ class NavigationState(
         }
     }
 
-    fun navigateInto(
+    fun navigate(
         route: String
     ) {
         navHostController.navigate(route)
