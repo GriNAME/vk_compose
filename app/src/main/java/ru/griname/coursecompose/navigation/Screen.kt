@@ -17,12 +17,14 @@ sealed class Screen(
             return "$ROUTE_FOR_ARGS/${feedPostJson.encode()}"
         }
     }
+
     object Favorite : Screen(ROUTE_FAVORITE)
 
     object FavoriteOne : Screen(ROUTE_FAVORITE_ONE)
     object FavoriteTwo : Screen(ROUTE_FAVORITE_TWO)
     object FavoriteThree : Screen(ROUTE_FAVORITE_THREE)
     object FavoriteFour : Screen(ROUTE_FAVORITE_FOUR)
+
     object Profile : Screen(ROUTE_PROFILE)
 
     companion object {

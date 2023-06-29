@@ -2,6 +2,7 @@ package ru.griname.coursecompose.ui.screen.home.comments
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -45,7 +46,7 @@ fun CommentsScreen(
             topBar = {
                 TopAppBar(
                     title = {
-                        Text(text = "${feedPost.contentText} ${currentState.feedPost.id}")
+                        Text(text = "FeedPost Id: ${currentState.feedPost.id}")
                     },
                     navigationIcon = {
                         IconButton(onClick = { onBackPressed() }) {
@@ -59,8 +60,22 @@ fun CommentsScreen(
             }
         ) { paddingValues ->
             LazyColumn(
-                modifier = Modifier.padding(paddingValues)
+                modifier = Modifier.padding(paddingValues),
+                contentPadding = PaddingValues(
+                    top = 16.dp,
+                    bottom = 72.dp
+                )
             ) {
+                item {
+                    Text(
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp)
+                            .padding(bottom = 16.dp),
+                        text = feedPost.contentText,
+                        fontSize = 12.sp
+                    )
+                }
+
                 items(
                     items = currentState.comments,
                     key = { it.id }
