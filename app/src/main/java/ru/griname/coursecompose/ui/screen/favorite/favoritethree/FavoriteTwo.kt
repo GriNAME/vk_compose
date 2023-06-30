@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import ru.griname.coursecompose.ui.component.CountText
 
 @Composable
 fun FavoriteTwo(
@@ -32,7 +33,7 @@ fun FavoriteTwo(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(text = currentState.text)
+                CountText(text = currentState.text)
 
                 Button(onClick = { onButtonClickListener() }) {
                     Text(text = "To FavoriteThree")

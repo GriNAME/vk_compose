@@ -3,7 +3,6 @@ package ru.griname.coursecompose.navigation
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import ru.griname.coursecompose.domain.FeedPost
 
 @Composable
@@ -15,7 +14,10 @@ fun AppNavGraph(
     favoriteTwoScreenContent: @Composable () -> Unit,
     favoriteThreeScreenContent: @Composable () -> Unit,
     favoriteFourScreenContent: @Composable () -> Unit,
-    profileScreenContent: @Composable () -> Unit
+    profileOneScreenContent: @Composable () -> Unit,
+    profileTwoScreenContent: @Composable () -> Unit,
+    profileThreeScreenContent: @Composable () -> Unit,
+    profileFourScreenContent: @Composable () -> Unit,
 ) {
     NavHost(
         navController = navHostController,
@@ -33,6 +35,11 @@ fun AppNavGraph(
             favoriteFourScreenContent = favoriteFourScreenContent,
         )
 
-        composable(Screen.Profile.route) { profileScreenContent() }
+        profileNavGraph(
+            profileOneScreenContent = profileOneScreenContent,
+            profileTwoScreenContent = profileTwoScreenContent,
+            profileThreeScreenContent = profileThreeScreenContent,
+            profileFourScreenContent = profileFourScreenContent
+        )
     }
 }

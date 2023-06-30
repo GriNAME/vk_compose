@@ -1,6 +1,5 @@
 package ru.griname.coursecompose.ui.screen
 
-import androidx.compose.foundation.clickable
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
@@ -9,10 +8,6 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -25,6 +20,10 @@ import ru.griname.coursecompose.ui.screen.favorite.favoritethree.FavoriteTwo
 import ru.griname.coursecompose.ui.screen.favorite.favoritetwo.FavoriteThree
 import ru.griname.coursecompose.ui.screen.home.comments.CommentsScreen
 import ru.griname.coursecompose.ui.screen.home.newsfeed.NewsFeedScreen
+import ru.griname.coursecompose.ui.screen.profile.profilefour.ProfileFour
+import ru.griname.coursecompose.ui.screen.profile.profileone.ProfileOne
+import ru.griname.coursecompose.ui.screen.profile.profilethree.ProfileTwo
+import ru.griname.coursecompose.ui.screen.profile.profiletwo.ProfileThree
 
 @Composable
 fun MainScreen() {
@@ -77,7 +76,7 @@ fun MainScreen() {
                 CommentsScreen(
                     feedPost = feedPost,
                     onCommentClickListener = {
-                        navigationState.navigate(Screen.FavoriteFour.route)
+                        navigationState.navigate(Screen.FavoriteThree.route)
                     },
                     onBackPressed = {
                         navigationState.navHostController.popBackStack()
@@ -100,27 +99,47 @@ fun MainScreen() {
             },
             favoriteThreeScreenContent = {
                 FavoriteThree {
-                    navigationState.navigateWithoutBackStack(
+                    navigationState.navigateIgnoringBackStack(
                         route = Screen.FavoriteFour.route,
                         ignoreDestination = Screen.FavoriteThree.route
                     )
                 }
             },
             favoriteFourScreenContent = {
-                FavoriteFour {
-                    navigationState.navHostController.popBackStack()
+                FavoriteFour(
+                    onButtonClickListener = {
+                        navigationState.navHostController.popBackStack()
+                    },
+                    onButtonDeepClickListener = {
+                        navigationState.navigate(Screen.ProfileThree.route)
+                    }
+                )
+
+            },
+            profileOneScreenContent = {
+                ProfileOne {
+                    navigationState.navigate(Screen.ProfileTwo.route)
                 }
             },
-            profileScreenContent = { CountText(text = "Profile") }
+            profileTwoScreenContent = {
+                ProfileTwo {
+                    navigationState.navigate(Screen.ProfileThree.route)
+                }
+            },
+            profileThreeScreenContent = {
+                ProfileThree {
+                    navigationState.navigate(Screen.ProfileFour.route)
+                }
+            },
+            profileFourScreenContent = {
+                ProfileFour {
+                    navigationState.navHostController.popBackStack(
+                        route = Screen.ProfileOne.route,
+                        inclusive = false,
+                        saveState = true
+                    )
+                }
+            }
         )
     }
-}
-
-@Composable
-private fun CountText(text: String) {
-    var count by rememberSaveable { mutableStateOf(0) }
-    Text(
-        modifier = Modifier.clickable { count++ },
-        text = "$text Count: $count"
-    )
 }

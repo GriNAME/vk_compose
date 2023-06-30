@@ -1,4 +1,4 @@
-package ru.griname.coursecompose.ui.screen.favorite.favoritefour
+package ru.griname.coursecompose.ui.screen.profile.profilefour
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,15 +16,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import ru.griname.coursecompose.ui.component.CountText
 
 @Composable
-fun FavoriteFour(
-    onButtonClickListener: () -> Unit,
-    onButtonDeepClickListener: () -> Unit
+fun ProfileFour(
+    onButtonClickListener: () -> Unit
 ) {
-    val viewModel: FavoriteFourViewModel = viewModel()
-    val screenState = viewModel.screenState.observeAsState(FavoriteFourState.Initial)
+    val viewModel: ProfileFourViewModel = viewModel()
+    val screenState = viewModel.screenState.observeAsState(ProfileFourState.Initial)
     val currentState = screenState.value
 
-    if (currentState is FavoriteFourState.FavoriteFour) {
+    if (currentState is ProfileFourState.ProfileFour) {
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
@@ -36,12 +35,10 @@ fun FavoriteFour(
             ) {
                 CountText(text = currentState.text)
 
-                Button(onClick = { onButtonClickListener() }) {
+                Button(
+                    onClick = { onButtonClickListener() }
+                ) {
                     Text(text = "Back")
-                }
-
-                Button(onClick = { onButtonDeepClickListener() }) {
-                    Text(text = "Go To ProfileThree")
                 }
             }
         }

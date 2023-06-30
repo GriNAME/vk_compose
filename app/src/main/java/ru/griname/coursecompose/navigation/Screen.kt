@@ -27,6 +27,11 @@ sealed class Screen(
 
     object Profile : Screen(ROUTE_PROFILE)
 
+    object ProfileOne : Screen(ROUTE_PROFILE_ONE)
+    object ProfileTwo : Screen(ROUTE_PROFILE_TWO)
+    object ProfileThree : Screen(ROUTE_PROFILE_THREE)
+    object ProfileFour : Screen(ROUTE_PROFILE_FOUR)
+
     companion object {
 
         const val KEY_FEED_POST = "KEY_FEED_POST"
@@ -43,6 +48,10 @@ sealed class Screen(
         private const val ROUTE_FAVORITE_FOUR = "ROUTE_FAVORITE_FOUR"
 
         private const val ROUTE_PROFILE = "ROUTE_PROFILE"
+        private const val ROUTE_PROFILE_ONE = "ROUTE_PROFILE_ONE"
+        private const val ROUTE_PROFILE_TWO = "ROUTE_PROFILE_TWO"
+        private const val ROUTE_PROFILE_THREE = "ROUTE_PROFILE_THREE"
+        private const val ROUTE_PROFILE_FOUR = "ROUTE_PROFILE_FOUR"
     }
 }
 

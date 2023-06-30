@@ -25,7 +25,7 @@ class NavigationState(
         navHostController.navigate(route)
     }
 
-    fun navigateWithoutBackStack(
+    fun navigateIgnoringBackStack(
         route: String,
         ignoreDestination: String
     ) {
