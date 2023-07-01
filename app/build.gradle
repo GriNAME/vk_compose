@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'ru.griname.coursecompose'
+    namespace 'ru.griname.vkcompose'
     compileSdk 33
 
     defaultConfig {
-        applicationId "ru.griname.coursecompose"
+        applicationId "ru.griname.vkcompose"
         minSdk 24
         targetSdk 33
         versionCode 1
